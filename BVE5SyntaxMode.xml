@@ -1,0 +1,80 @@
+<!-- BVE5SyntaxMode.xml
+
+ Author:
+   HAZAMA <kotonechan@live.jp>
+
+ Copyright (c) 2012 HAZAMA (http://funprogramming.ojaru.jp/)
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE. -->
+
+<SyntaxMode name="BVE5" mimeTypes="text/x-bve5">
+	<Property name="LineComment">//</Property>
+	
+	<EolSpan color="comment.line" tagColor="comment.tag.line">//</EolSpan>
+	
+	<Keywords color="keyword.operator">
+		<Word>.</Word>
+	</Keywords>
+	
+	<Keywords color="keyword.type">
+		<Word>Curve</Word>
+		<Word>Gradient</Word>
+		<Word>Track</Word>
+		<Word>Structure</Word>
+		<Word>Repeater</Word>
+		<Word>Background</Word>
+		<Word>Station</Word>
+		<Word>Signal</Word>
+		<Word>Section</Word>
+		<Word>Beacon</Word>
+		<Word>SpeedLimit</Word>
+		<Word>PreTrain</Word>
+		<Word>Light</Word>
+		<Word>Fog</Word>
+		<Word>CabIlluminance</Word>
+		<Word>Irregularity</Word>
+		<Word>Adhesion</Word>
+		<Word>Sound</Word>
+		<Word>Sound3D</Word>
+		<Word>RollingNoise</Word>
+		<Word>FlangeNoise</Word>
+		<Word>JointNoise</Word>
+		<Word>Train</Word>
+		<Word>Section</Word>
+		<Word>Legacy</Word>
+	</Keywords>
+	
+	<Rule name="Position">
+		<Match color="constant.digit">
+			^\d+;
+		</Match>
+	</Rule>
+	
+	<Rule name="KeyReference">
+		<Match color="constant">
+			\[.+?\]
+		</Match>
+	</Rule>
+	
+	<Rule name="Arguments">
+		<Match>
+			\(.+?\)
+		</Match>
+	</Rule>
+</SyntaxMode>

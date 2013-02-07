@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{22139DB6-1CBF-400C-8C80-7DEDA9278989}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BVE5Language</RootNamespace>
+    <AssemblyName>BVE5Language</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="ICSharpCode.NRefactory, Version=5.0.0.0, Culture=neutral, PublicKeyToken=d4bfe873e7598c49">
+      <Private>False</Private>
+      <Package>monodevelop</Package>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Ast\AstNode.cs" />
+    <Compile Include="Ast\SyntaxTree.cs" />
+    <Compile Include="Ast\TimeFormatLiteral.cs" />
+    <Compile Include="Ast\AstWalker.cs" />
+    <Compile Include="Ast\InvocationExpression.cs" />
+    <Compile Include="Ast\Expression.cs" />
+    <Compile Include="Ast\LiteralExpression.cs" />
+    <Compile Include="Ast\MemberReferenceExpression.cs" />
+    <Compile Include="Ast\IndexerExpression.cs" />
+    <Compile Include="Ast\Identifer.cs" />
+    <Compile Include="BVE5RouteFileParser.cs" />
+    <Compile Include="Ast\Statement.cs" />
+    <Compile Include="Resolver\BVE5AstResolver.cs" />
+    <Compile Include="BVE5RouteFileLexer.cs" />
+    <Compile Include="BVE5ParserException.cs" />
+    <Compile Include="Resolver\BVE5Resolver.cs" />
+    <Compile Include="TypeSystem\BVE5UnresolvedFile.cs" />
+    <Compile Include="TypeSystem\NameType.cs" />
+    <Compile Include="Resolver\BVE5SemanticInfo.cs" />
+    <Compile Include="Resolver\IResolveVisitorNavigator.cs" />
+    <Compile Include="Resolver\ResolveVisitor.cs" />
+    <Compile Include="Resolver\Log.cs" />
+    <Compile Include="TypeSystem\BVE5TypeResolveContext.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileFormatDefault" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Resolver\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\BVE5BuiltinNames.json" />
+    <None Include="resources\BVE5SemanticInfos.json" />
+    <None Include="resources\BVE5Documentation.json" />
+  </ItemGroup>
+</Project>

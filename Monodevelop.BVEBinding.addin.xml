@@ -1,0 +1,50 @@
+<Addin id="BVEBinding"
+	   namespace="MonoDevelop"
+	   name="BVE Language Binding"
+	   author="HAZAMA"
+	   copyright="MIT X11"
+	   description="Language binding for BVE"
+	   category="Language bindings"
+	   version="1.0">
+	<Dependencies>
+		<Addin id="Ide" version="3.1.0" />
+		<Addin id="Ide" version="3.1.0"/>
+		<Addin id="SourceEditor2" version="3.1.0"/>
+	</Dependencies>
+	
+	<Extension path = "/MonoDevelop/Ide/FileTemplates">
+		<FileTemplate id = "BVE5RouteFile" resource = "BVE5RouteFile.xft.xml"/>
+	</Extension>
+	
+	<Extension path = "/MonoDevelop/Ide/FileFilters">
+		<FileFilter
+			id = "BVE5"
+			insertbefore = "AllFiles"
+			_label = "Possibly BVE5 Route Files"
+			extensions = "*.txt"/>
+	</Extension>
+	
+	<Extension path="/MonoDevelop/Core/MimeTypes">
+		<MimeType id="text/x-bve5" _description="BVE5 Route files" isText="true">
+			<File pattern="*.txt" />
+		</MimeType>
+	</Extension>
+	
+	<Extension path = "/MonoDevelop/ProjectModel/LanguageBindings">
+		<LanguageBinding
+			id = "BVE5"
+		    supportedextensions = ".txt"
+		    class = "MonoDevelop.BVEBinding.BVELanguageBinding"/>
+    </Extension>
+    
+    <!--<Extension path = "/MonoDevelop/Ide/TextEditorExtensions">
+		<Class fileExtensions = ".txt" class = "MonoDevelop.BVEBinding.Formatting.BVE5TextEditorIndentation" />
+		<Class fileExtensions = ".txt" class = "MonoDevelop.BVEBinding.Completion.BVE5CompletionTextEditorExtension" />
+		<Class fileExtensions = ".txt" class = "MonoDevelop.CSharp.Highlighting.HighlightUsagesExtension" />
+		<Class fileExtensions = ".txt" class = "MonoDevelop.CSharp.PathedDocumentTextEditorExtension" />
+	</Extension>-->
+	
+	<Extension path="/MonoDevelop/SourceEditor2/SyntaxModes">
+		<Templates file="./BVE5SyntaxMode.xml"/>
+	</Extension>
+</Addin>

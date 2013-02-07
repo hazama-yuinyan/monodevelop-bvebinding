@@ -1,0 +1,124 @@
+{
+	"TypeNames" : [
+		"Curve",
+		"Gradient",
+		"Track",
+		"Structure",
+		"Repeater",
+		"Background",
+		"Station",
+		"Signal",
+		"Beacon",
+		"SpeedLimit",
+		"PreTrain",
+		"Light",
+		"Fog",
+		"CabIlluminance",
+		"Irregularity",
+		"Adhesion",
+		"Sound",
+		"Sound3D",
+		"RollingNoise",
+		"FlangeNoise",
+		"JointNoise",
+		"Train",
+		"Legacy"
+	],
+	"Methods" : {
+		"Curve" : [
+			"Gauge",
+			"BeginTransition",
+			"BeginCircular",
+			"End"
+		],
+		"Gradient" : [
+			"BeginTransition",
+			"BeginConst",
+			"End"
+		],
+		"Track" : [
+			"Gauge",
+			"Position",
+			"Cant"
+		],
+		"Structure" : [
+			"Load",
+			"Put",
+			"Put0",
+			"PutBetween"
+		],
+		"Repeater" : [
+			"Begin",
+			"Begin0",
+			"End"
+		],
+		"Background" : [
+			"Change"
+		],
+		"Station" : [
+			"Load",
+			"Put"
+		],
+		"Signal" : [
+			"Load",
+			"Put",
+			"SpeedLimit"
+		],
+		"Section" : [
+			"BeginNew"
+		],
+		"Beacon" : [
+			"Put"
+		],
+		"SpeedLimit" : [
+			"Begin",
+			"End"
+		],
+		"PreTrain" : [
+			"Pass"
+		],
+		"Light" : [
+			"Ambient",
+			"Diffuse",
+			"Direction"
+		],
+		"Fog" : [
+			"Set"
+		],
+		"CabIlluminance" : [
+			"Set"
+		],
+		"Irregularity" : [
+			"Change"
+		],
+		"Adhesion" : [
+			"Change"
+		],
+		"Sound" : [
+			"Load",
+			"Play"
+		],
+		"Sound3D" : [
+			"Load",
+			"Put"
+		],
+		"RollingNoise" : [
+			"Change"
+		],
+		"FlangeNoise" : [
+			"Change"
+		],
+		"JointNoise" : [
+			"Play"
+		],
+		"Train" : [
+			"Add",
+			"Enable",
+			"Stop"
+		],
+		"Legacy" : [
+			"Curve",
+			"Pitch"
+		]
+	}
+}

@@ -1,0 +1,331 @@
+{
+	"SemanticInfos" : {
+		"Curve.Gauge" : {
+			"Args" : [{"value" : "int"}],
+			"Doc" : "$Doc1"
+		},
+		"Curve.BeginTransition" : {
+			"Args" : [],
+			"Doc" : "$Doc2"
+		},
+		"Curve.BeginCircular" : {
+			"Args" : [
+				{"radius" : "int"},
+				{"cant" : "int"}
+			],
+			"Doc" : "$Doc3"
+		},
+		"Curve.End" : {
+			"Args" : [],
+			"Doc" : "$Doc4"
+		},
+		"Gradient.BeginTransition" : {
+			"Args" : [],
+			"Doc" : "$Doc5"
+		},
+		"Gradient.BeginConst" : {
+			"Args" : [{"gradient" : "int"}],
+			"Doc" : "$Doc6"
+		},
+		"Gradient.End" : {
+			"Args" : [],
+			"Doc" : "$Doc7"
+		},
+		"Track" : {
+			"Args" : [{"trackKey" : "name"}],
+			"Doc" : ""
+		},
+		"Track.Gauge" : {
+			"Args" : [{"value" : "int"}],
+			"Doc" : "$Doc8"
+		},
+		"Track.Position" : {
+			"Args" : [
+				{"x" : "int"},
+				{"y" : "int"}
+			],
+			"Doc" : "$Doc9"
+		},
+		"Track.Position" : {
+			"Args" : [
+				{"x" : "int"},
+				{"y" : "int"},
+				{"radiusH" : "int"},
+				{"radiusV" : "int"}
+			],
+			"Doc" : "$Doc10"
+		},
+		"Track.Cant" : {
+			"Args" : [{"value" : "int"}],
+			"Doc" : "$Doc11"
+		},
+		"Structure" : {
+			"Args" : [{"structureKey" : "name"}],
+			"Doc" : ""
+		},
+		"Structure.Load" : {
+			"Args" : [{"filePath" : "name"}],
+			"Doc" : "$Doc12"
+		},
+		"Structure.Put" : {
+			"Args" : [
+				{"trackKey" : "name"},
+				{"x" : "int"},
+				{"y" : "int"},
+				{"z" : "int"},
+				{"rx" : "double"},
+				{"ry" : "double"},
+				{"rz" : "double"},
+				{"tilt" : "enum<Tilt>"},
+				{"span" : "int"}
+			],
+			"Doc" : "$Doc13"
+		},
+		"Structure.Put0" : {
+			"Args" : [
+				{"trackKey" : "name"},
+				{"tilt" : "enum<Tilt>"},
+				{"span" : "int"}
+			],
+			"Doc" : "$Doc14"
+		},
+		"Structure.PutBetween" : {
+			"Args" : [
+				{"trackKey1" : "name"},
+				{"trackKey2" : "name"}
+			],
+			"Doc" : "$Doc15"
+		},
+		"Repeater" : {
+			"Args" : [{"repeaterKey" : "name"}],
+			"Doc" : ""
+		},
+		"Repeater.Begin" : {
+			"Args" : [
+				{"trackKey" : "name"},
+				{"x" : "int"},
+				{"y" : "int"},
+				{"z" : "int"},
+				{"rx" : "double"},
+				{"ry" : "double"},
+				{"rz" : "double"},
+				{"tilt" : "enum<Tilt>"},
+				{"span" : "int"},
+				{"interval" : "int"},
+				{"structureKey..." : "name"}
+			],
+			"Doc" : "$Doc16"
+		},
+		"Repeater.Begin0" : {
+			"Args" : [
+				{"trackKey" : "name"},
+				{"tilt" : "enum<Tilt>"},
+				{"span" : "int"},
+				{"interval" : "int"},
+				{"structureKey..." : "name"}
+			],
+			"Doc" : "$Doc17"
+		},
+		"Repeater.End" : {
+			"Args" : [],
+			"Doc" : "$Doc18"
+		},
+		"Background.Change" : {
+			"Args" : [{"structureKey" : "name"}],
+			"Doc" : "$Doc19"
+		},
+		"Station" : {
+			"Args" : [{"stationKey" : "name"}],
+			"Doc" : "$Doc20"
+		},
+		"Station.Load" : {
+			"Args" : [{"filePath" : "name"}],
+			"Doc" : "$Doc21"
+		},
+		"Station.Put" : {
+			"Args" : [
+				{"door" : "enum<Direction>"},
+				{"margin1" : "int"},
+				{"margin2" : "int"}
+			],
+			"Doc" : "$Doc22"
+		},
+		"Signal" : {
+			"Args" : [{"signalAspectKey" : "name"}],
+			"Doc" : ""
+		},
+		"Signal.Load" : {
+			"Args" : [{"filePath" : "name"}],
+			"Doc" : "$Doc23"
+		},
+		"Signal.Put" : {
+			"Args" : [
+				{"section" : "int"},
+				{"trackKey" : "name"},
+				{"x" : "int"},
+				{"y" : "int"}
+			],
+			"Doc" : "$Doc24"
+		},
+		"Signal.Put" : {
+			"Args" : [
+				{"section" : "int"},
+				{"trackKey" : "name"},
+				{"x" : "int"},
+				{"y" : "int"},
+				{"z" : "int"},
+				{"rx" : "double"},
+				{"ry" : "double"},
+				{"rz" : "double"},
+				{"tilt" : "enum<Tilt>"},
+				{"span" : "int"}
+			],
+			"Doc" : "$Doc25"
+		},
+		"Beacon.Put" : {
+			"Args" : [
+				{"type" : "int"},
+				{"section" : "int"},
+				{"sendingData" : "int"}
+			],
+			"Doc" : "$Doc26"
+		},
+		"Signal.SpeedLimit" : {
+			"Args" : [{"v..." : "int"}],
+			"Doc" : "$Doc27"
+		},
+		"SpeedLimit.Begin" : {
+			"Args" : [{"v" : "int"}],
+			"Doc" : "$Doc28"
+		},
+		"SpeedLimit.End" : {
+			"Args" : [],
+			"Doc" : "$Doc29"
+		},
+		"PreTrain.Pass" : {
+			"Args" : [{"time" : "TimeFormat"}],
+			"Doc" : "$Doc30"
+		},
+		"Light.Ambient" : {
+			"Args" : [
+				{"red" : "double"},
+				{"green" : "double"},
+				{"blue" : "double"}
+			],
+			"Doc" : "$Doc31"
+		},
+		"Light.Diffuse" : {
+			"Args" : [
+				{"red" : "double"},
+				{"green" : "double"},
+				{"blue" : "double"}
+			],
+			"Doc" : "$Doc32"
+		},
+		"Light.Direction" : {
+			"Args" : [
+				{"pitch" : "int"},
+				{"yaw" : "int"}
+			],
+			"Doc" : "$Doc33"
+		},
+		"Fog.Set" : {
+			"Args" : [
+				{"density" : "int"},
+				{"red" : "double"},
+				{"green" : "double"},
+				{"blue" : "double"}
+			],
+			"Doc" : "$Doc34"
+		},
+		"CabIlliminance.Set" : {
+			"Args" : [{"value" : "double"}],
+			"Doc" : "$Doc35"
+		},
+		"Irregularity.Change" : {
+			"Args" : [
+				{"x" : "int"},
+				{"y" : "int"},
+				{"r" : "double"},
+				{"lx" : "int"},
+				{"ly" : "int"},
+				{"lr" : "int"}
+			],
+			"Doc" : "$Doc36"
+		},
+		"Adhesion.Change" : {
+			"Args" : [{"a" : "double"}],
+			"Doc" : "$Doc37"
+		},
+		"Adhesion.Change" : {
+			"Args" : [
+				{"a" : "double"},
+				{"b" : "double"},
+				{"c" : "double"}
+			],
+			"Doc" : "$Doc38"
+		},
+		"Sound" : {
+			"Args" : [{"soundKey" : "name"}],
+			"Doc" : ""
+		},
+		"Sound.Load" : {
+			"Args" : [{"filePath" : "name"}],
+			"Doc" : "$Doc39"
+		},
+		"Sound.Play" : {
+			"Args" : [],
+			"Doc" : "$Doc40"
+		},
+		"Sound3D" : {
+			"Args" : [{"soundKey" : "name"}],
+			"Doc" : ""
+		},
+		"Sound3D.Load" : {
+			"Args" : [{"filePath" : "name"}],
+			"Doc" : "$Doc41"
+		},
+		"Sound3D.Put" : {
+			"Args" : [],
+			"Doc" : "$Doc42"
+		},
+		"RollingNoise.Change" : {
+			"Args" : [{"index" : "IndexRun"}],
+			"Doc" : "$Doc43"
+		},
+		"FlangeNoise.Change" : {
+			"Args" : [{"index" : "IndexFlange"}],
+			"Doc" : "$Doc44"
+		},
+		"JointNoise.Play" : {
+			"Args" : [{"index" : "IndexJoint"}],
+			"Doc" : "$Doc45"
+		},
+		"Train" : {
+			"Args" : [{"trainKey" : "name"}],
+			"Doc" : ""
+		},
+		"Train.Add" : {
+			"Args" : [
+				{"trainKey" : "name"},
+				{"filePath" : "name"},
+				{"trackKey" : "name"},
+				{"direction" : "enum<ForwardingDirection>"}
+			],
+			"Doc" : "$Doc46"
+		},
+		"Train.Enable" : {
+			"Args" : [{"time" : "TimeFormat"}],
+			"Doc" : "$Doc47"
+		},
+		"Train.Stop" : {
+			"Args" : [
+				{"decelerate" : "double"},
+				{"stopTime" : "int"},
+				{"accelerate" : "double"},
+				{"speed" : "double"}
+			],
+			"Doc" : "$Doc48"
+		}
+	}
+}

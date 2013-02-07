@@ -1,0 +1,59 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Tests/Test.cs">
+    <Files>
+      <File FileName="BVE5SyntaxMode.xml" Line="59" Column="16" />
+      <File FileName="Monodevelop.BVEBinding.addin.xml" Line="30" Column="14" />
+      <File FileName="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Parser/BVE5RouteFileParser.cs" Line="160" Column="26" />
+      <File FileName="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Parser/Resolver/BVE5AstResolver.cs" Line="7" Column="2" />
+      <File FileName="MonoDevelop.BVEBinding.Highlighting/BVE5SyntaxMode.cs" Line="201" Column="28" />
+      <File FileName="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Tests/Test.cs" Line="75" Column="3" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="BVE5Language" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="Ast" expanded="True" />
+            <Node name="Resolver" expanded="True" />
+          </Node>
+          <Node name="BVE5Tests" expanded="True" selected="True">
+            <Node name="References" expanded="True" />
+          </Node>
+          <Node name="BVELanguageBinding" expanded="True">
+            <Node name="MonoDevelop.BVEBinding" expanded="True" />
+            <Node name="MonoDevelop.BVEBinding.Highlighting" expanded="True" />
+            <Node name="MonoDevelop.BVEBinding.Parser" expanded="True">
+              <Node name="TypeSystem" expanded="True" />
+            </Node>
+            <Node name="MonoDevelop.BVEBinding.Refactoring" expanded="True" />
+            <Node name="MonoDevelop.BVEBinding.Resolver" expanded="True" />
+            <Node name="resources" expanded="True" />
+            <Node name="templates" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State expanded="True">
+          <Node name="BVE5Tests" expanded="True" selected="True">
+            <Node name="BVE5Language" expanded="True">
+              <Node name="Tests" expanded="True">
+                <Node name="RouteParserTests" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<Template Originator="HAZAMA" Language="Expresso" Created="12/18/2012" LastModified="12/18/2012">
+
+	<TemplateConfiguration>
+		<_Name>BVE5 Route File</_Name>
+		<Icon>md-text-file-icon</Icon>
+		<_Category>BVE5</_Category>
+		<LanguageName>BVE5</LanguageName>
+		<_Description>Creates a new route file for BVE5.</_Description>
+	</TemplateConfiguration>
+
+	<TemplateFiles>
+		<File name="route.txt">
+			<![CDATA[BveTs Map 1.00
+			
+]]></File>
+	</TemplateFiles>
+
+	<FileOptions/>
+
+</Template>

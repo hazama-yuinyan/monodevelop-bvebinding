@@ -46,6 +46,12 @@ namespace BVE5Language.Ast
 			get{return args;}
 		}
 
+		public override NodeType Type {
+			get {
+				return NodeType.Invocation;
+			}
+		}
+
 		public InvocationExpression(Expression targetExpr, Expression[] arguments, TextLocation startLoc, TextLocation endLoc)
 			: base(startLoc, endLoc)
 		{

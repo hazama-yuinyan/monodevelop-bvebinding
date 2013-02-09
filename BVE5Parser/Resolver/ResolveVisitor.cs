@@ -195,7 +195,7 @@ namespace BVE5Language.Resolver
 		}
 
 		#region AstWalker members
-		public ResolveResult Walk(Identifer node)
+		public ResolveResult Walk(Identifier node)
 		{
 			return null;
 		}

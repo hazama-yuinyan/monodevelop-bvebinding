@@ -44,14 +44,13 @@ using MonoDevelop.Ide.Tasks;
 using MonoDevelop.Ide.TypeSystem;
 using MonoDevelop.SourceEditor.QuickTasks;
 
+using BVE5Language.Ast;
 using BVE5Language.Resolver;
 using BVE5Language.TypeSystem;
 
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory;
-
-using BVE5Language.Ast;
 
 namespace MonoDevelop.BVEBinding.Highlighting
 {
@@ -76,7 +75,7 @@ namespace MonoDevelop.BVEBinding.Highlighting
 		SyntaxTree unit;
 		BVE5UnresolvedFile parsed_file;
 		ICompilation compilation;
-		BVE5Resolver resolver;
+		BVE5AstResolver resolver;
 		CancellationTokenSource src = null;
 
 		internal class StyledTreeSegment : TreeSegment
@@ -193,7 +192,7 @@ namespace MonoDevelop.BVEBinding.Highlighting
 			private readonly BVE5AstResolver resolver;
 			private readonly CancellationToken cancellation_token;
 
-			public QuickTaskVisitor(ICSharpCode.NRefactory.CSharp.Resolver.CSharpAstResolver resolver, CancellationToken cancellationToken)
+			public QuickTaskVisitor(BVE5AstResolver resolver, CancellationToken cancellationToken)
 			{
 				this.resolver = resolver;
 			}
@@ -201,26 +200,32 @@ namespace MonoDevelop.BVEBinding.Highlighting
 			protected bool Walk(AstNode node)
 			{
 				if(cancellation_token.IsCancellationRequested)
-					return;
+					return false;
 
-				//base.VisitChildren(node);
+				return true;
 			}
 
-			public override bool Walk(Identifer identifierExpression)
+			public override bool Walk(Identifier node)
 			{
 				//base.VisitIdentifierExpression(identifierExpression);
 				
-				var result = resolver.Resolve(identifierExpression, cancellation_token);
+				var result = resolver.Resolve(node, cancellation_token);
 				if(result.IsError)
-					QuickTasks.Add (new QuickTask(string.Format("error CS0103: The name `{0}' does not exist in the current context", identifierExpression.Identifier), identifierExpression.StartLocation, Severity.Error));
+					QuickTasks.Add(new QuickTask(string.Format("error CS0103: The name `{0}' does not exist in the current context", node.Name),
+					                             node.StartLocation, ICSharpCode.NRefactory.CSharp.Severity.Error));
+
+				return false;
 			}
 
-			public override bool Walk(MemberReferenceExpression memberReferenceExpression)
+			public override bool Walk(MemberReferenceExpression node)
 			{
 				//base.VisitMemberReferenceExpression(memberReferenceExpression);
-				var result = resolver.Resolve(memberReferenceExpression, cancellation_token) as UnknownMemberResolveResult;
+				var result = resolver.Resolve(node, cancellation_token) as UnknownMemberResolveResult;
 				if(result != null && result.TargetType.Kind != TypeKind.Unknown)
-					QuickTasks.Add(new QuickTask(string.Format("error CS0117: `{0}' does not contain a definition for `{1}'", result.TargetType.FullName, memberReferenceExpression.MemberName), memberReferenceExpression.MemberNameToken.StartLocation, Severity.Error));
+					QuickTasks.Add(new QuickTask(string.Format("error CS0117: `{0}' does not contain a definition for `{1}'", result.TargetType.FullName, node.Reference.Name),
+					                             node.Reference.StartLocation, ICSharpCode.NRefactory.CSharp.Severity.Error));
+
+				return true;
 			}
 		}
 		
@@ -246,7 +251,7 @@ namespace MonoDevelop.BVEBinding.Highlighting
 				SyntaxMode base_mode = SyntaxMode.Read(reader);
 				rules = new List<Rule>(base_mode.Rules);
 				keywords = new List<Keywords>(base_mode.Keywords);
-				spans = new List<Span>(base_mode.Spans);
+				spans = base_mode.Spans;
 				matches = base_mode.Matches;
 				prevMarker = base_mode.PrevMarker;
 				SemanticRules = new List<SemanticRule>(base_mode.SemanticRules);
@@ -350,45 +355,7 @@ namespace MonoDevelop.BVEBinding.Highlighting
 			}
 		}
 
-		class IfBlockSpan : AbstractBlockSpan
-		{
-			public IfBlockSpan (bool isValid) : base (isValid)
-			{
-			}
-			
-			public override string ToString ()
-			{
-				return string.Format("[IfBlockSpan: IsValid={0}, Disabled={3}, Color={1}, Rule={2}]", IsValid, Color, Rule, Disabled);
-			}
-		}
-		
-		class ElseIfBlockSpan : AbstractBlockSpan
-		{
-			public ElseIfBlockSpan (bool isValid) : base (isValid)
-			{
-				base.Begin = new Regex ("#elif");
-			}
-			
-			public override string ToString ()
-			{
-				return string.Format("[ElseIfBlockSpan: IsValid={0}, Disabled={3}, Color={1}, Rule={2}]", IsValid, Color, Rule, Disabled);
-			}
-		}
-		
-		class ElseBlockSpan : AbstractBlockSpan
-		{
-			public ElseBlockSpan (bool isValid) : base (isValid)
-			{
-				base.Begin = new Regex ("#else");
-			}
-			
-			public override string ToString ()
-			{
-				return string.Format("[ElseBlockSpan: IsValid={0}, Disabled={3}, Color={1}, Rule={2}]", IsValid, Color, Rule, Disabled);
-			}
-		}
-		
-		protected class BVE5ChunkParser : ChunkParser, IResolveVisitorNavigator
+		protected class BVE5ChunkParser : ChunkParser
 		{
 			HashSet<string> tags = new HashSet<string>();
 			/*
@@ -435,27 +402,6 @@ namespace MonoDevelop.BVEBinding.Highlighting
 					tags.Add(tag.Tag);
 			}
 
-			#region IResolveVisitorNavigator implementation
-			ResolveVisitorNavigationMode IResolveVisitorNavigator.Scan(AstNode node)
-			{
-/*				if (node.StartLocation.Line <= lineNumber && node.EndLocation.Line >= lineNumber) {*/
-					if (node is SimpleType || node is MemberType
-					    || node is Identifer || node is MemberReferenceExpression
-					    || node is InvocationExpression)
-					{
-						return ResolveVisitorNavigationMode.Resolve;
-					} else {
-						return ResolveVisitorNavigationMode.Scan;
-					}
-/*				} else {
-					return ResolveVisitorNavigationMode.Skip;
-				}*/
-			}
-			
-			void IResolveVisitorNavigator.Resolved(AstNode node, ResolveResult result)
-			{
-			}
-			#endregion
 			string GetSemanticStyle(ParsedDocument parsedDocument, Chunk chunk, ref int endOffset)
 			{
 				string style;
@@ -481,29 +427,8 @@ namespace MonoDevelop.BVEBinding.Highlighting
 				
 				var loc = doc.OffsetToLocation(chunk.Offset);
 				var node = unit.GetNodeAt(loc, n => n is Identifier);
-				var word = wordbuilder.ToString();
-				string color;
 
 				while(node != null && !(node is Statement)){
-					if(node is CommentNode)
-						break;
-
-					if(node is ICSharpCode.NRefactory.CSharp.MemberType){
-						var mt = (ICSharpCode.NRefactory.CSharp.MemberType)node;
-						
-						var result = bve_syntax_mode.resolver.Resolve(mt);
-						if(result.IsError && bve_syntax_mode.gui_doc.Project != null){
-							endOffset = chunk.Offset + TokenLength(mt.MemberNameToken);
-							return "keyword.semantic.error";
-						}
-
-						if(result is TypeResolveResult && mt.MemberNameToken.Contains(loc) && unit.GetNodeAt<UsingDeclaration>(loc) == null){
-							endOffset = chunk.Offset + TokenLength(mt.MemberNameToken);
-							return "keyword.semantic.type";
-						}
-						return null;
-					}
-					
 					if(node is Identifier){
 						if(node.Parent is IndexerExpression){
 							endOffset = chunk.Offset + TokenLength((Identifier)node);
@@ -513,36 +438,6 @@ namespace MonoDevelop.BVEBinding.Highlighting
 						if(node.Parent is MemberReferenceExpression){
 							endOffset = chunk.Offset + TokenLength((Identifier)node);
 							return "keyword.semantic";
-						}
-					}
-					
-					var id = node as IdentifierExpression;
-					if (id != null) {
-						var result = bve_syntax_mode.resolver.Resolve (id);
-						if (result.IsError && bve_syntax_mode.gui_doc.Project != null) {
-							endOffset = chunk.Offset + TokenLength (id.IdentifierToken);
-							return "keyword.semantic.error";
-						}
-						
-						if (result is MemberResolveResult) {
-							var member = ((MemberResolveResult)result).Member;
-							if (member is IField) {
-								var field = member as IField;
-								if (field.IsConst || field.IsStatic && field.IsReadOnly)
-									return null;
-								endOffset = chunk.Offset + TokenLength (id.IdentifierToken);
-								return "keyword.semantic.field";
-							}
-							if (member is IProperty) {
-								endOffset = chunk.Offset + TokenLength (id.IdentifierToken);
-								return "keyword.semantic.property";
-							}
-						}
-						if (result is TypeResolveResult) {
-							if (!result.IsError && bve_syntax_mode.gui_doc.Project != null) {
-								endOffset = chunk.Offset + id.Identifier.Length;
-								return "keyword.semantic.type";
-							}
 						}
 					}
 					
@@ -672,16 +567,16 @@ namespace MonoDevelop.BVEBinding.Highlighting
 			
 			void PopCurrentIfBlock()
 			{
-				while (spanStack.Count > 0 && (spanStack.Peek () is IfBlockSpan || spanStack.Peek () is ElseIfBlockSpan || spanStack.Peek () is ElseBlockSpan)) {
+				/*while (spanStack.Count > 0 && (spanStack.Peek () is IfBlockSpan || spanStack.Peek () is ElseIfBlockSpan || spanStack.Peek () is ElseBlockSpan)) {
 					var poppedSpan = PopSpan ();
 					if (poppedSpan is IfBlockSpan)
 						break;
-				}
+				}*/
 			}
 			
 			protected override bool ScanSpanEnd(Mono.TextEditor.Highlighting.Span cur, ref int i)
 			{
-				if (cur is IfBlockSpan || cur is ElseIfBlockSpan || cur is ElseBlockSpan) {
+				/*if (cur is IfBlockSpan || cur is ElseIfBlockSpan || cur is ElseBlockSpan) {
 					int textOffset = i - StartOffset;
 					bool end = CurText.IsAt (textOffset, "#endif");
 					if (end) {
@@ -696,7 +591,7 @@ namespace MonoDevelop.BVEBinding.Highlighting
 						}
 					}
 					return end;
-				}
+				}*/
 				return base.ScanSpanEnd (cur, ref i);
 			}
 			

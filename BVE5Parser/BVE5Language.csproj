@@ -38,6 +38,7 @@
       <HintPath>..\bin\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="Mono.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -50,7 +51,6 @@
     <Compile Include="Ast\LiteralExpression.cs" />
     <Compile Include="Ast\MemberReferenceExpression.cs" />
     <Compile Include="Ast\IndexerExpression.cs" />
-    <Compile Include="Ast\Identifer.cs" />
     <Compile Include="BVE5RouteFileParser.cs" />
     <Compile Include="Ast\Statement.cs" />
     <Compile Include="Resolver\BVE5AstResolver.cs" />
@@ -58,12 +58,15 @@
     <Compile Include="BVE5ParserException.cs" />
     <Compile Include="Resolver\BVE5Resolver.cs" />
     <Compile Include="TypeSystem\BVE5UnresolvedFile.cs" />
-    <Compile Include="TypeSystem\NameType.cs" />
     <Compile Include="Resolver\BVE5SemanticInfo.cs" />
-    <Compile Include="Resolver\IResolveVisitorNavigator.cs" />
     <Compile Include="Resolver\ResolveVisitor.cs" />
     <Compile Include="Resolver\Log.cs" />
     <Compile Include="TypeSystem\BVE5TypeResolveContext.cs" />
+    <Compile Include="TypeSystem\TypeSystemConvertWalker.cs" />
+    <Compile Include="Ast\Identifier.cs" />
+    <Compile Include="Resolver\MethodGroupResolveResult.cs" />
+    <Compile Include="Ast\NodeType.cs" />
+    <Compile Include="Token.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -82,5 +85,8 @@
     <None Include="resources\BVE5BuiltinNames.json" />
     <None Include="resources\BVE5SemanticInfos.json" />
     <None Include="resources\BVE5Documentation.json" />
+    <None Include="TypeSystem\NameType.cs" />
+    <None Include="Resolver\OverloadResolution.cs" />
+    <None Include="Resolver\OverloadResolutionErrors.cs" />
   </ItemGroup>
 </Project>

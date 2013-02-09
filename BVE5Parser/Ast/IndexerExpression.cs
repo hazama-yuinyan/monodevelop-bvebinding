@@ -35,17 +35,23 @@ namespace BVE5Language.Ast
 	public class IndexerExpression : Expression
 	{
 		private readonly Expression target;
-		private readonly Identifer index;
+		private readonly Identifier index;
 
 		public Expression Target{
 			get{return target;}
 		}
 
-		public Identifer Index{
+		public Identifier Index{
 			get{return index;}
 		}
 
-		public IndexerExpression(Expression targetExpr, Identifer indexKey, TextLocation startLoc, TextLocation endLoc)
+		public override NodeType Type {
+			get {
+				return NodeType.Indexer;
+			}
+		}
+
+		public IndexerExpression(Expression targetExpr, Identifier indexKey, TextLocation startLoc, TextLocation endLoc)
 			: base(startLoc, endLoc)
 		{
 			target = targetExpr;

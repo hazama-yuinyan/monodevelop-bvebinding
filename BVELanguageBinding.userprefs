@@ -4,32 +4,27 @@
     <Files>
       <File FileName="BVE5SyntaxMode.xml" Line="59" Column="16" />
       <File FileName="Monodevelop.BVEBinding.addin.xml" Line="30" Column="14" />
-      <File FileName="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Parser/BVE5RouteFileParser.cs" Line="160" Column="26" />
-      <File FileName="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Parser/Resolver/BVE5AstResolver.cs" Line="7" Column="2" />
-      <File FileName="MonoDevelop.BVEBinding.Highlighting/BVE5SyntaxMode.cs" Line="201" Column="28" />
-      <File FileName="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Tests/Test.cs" Line="75" Column="3" />
+      <File FileName="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Parser/BVE5RouteFileParser.cs" Line="73" Column="1" />
+      <File FileName="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Parser/Resolver/BVE5Resolver.cs" Line="58" Column="1" />
+      <File FileName="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Parser/Resolver/ResolveVisitor.cs" Line="235" Column="16" />
+      <File FileName="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Parser/TypeSystem/BVE5UnresolvedFile.cs" Line="43" Column="3" />
+      <File FileName="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Tests/Test.cs" Line="65" Column="1" />
+      <File FileName="../../ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Parser/Ast/AstNode.cs" Line="288" Column="11" />
+      <File FileName="MonoDevelop.BVEBinding/BVEMode.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="BVE5Language" expanded="True">
-            <Node name="References" expanded="True" />
             <Node name="Ast" expanded="True" />
             <Node name="Resolver" expanded="True" />
+            <Node name="TypeSystem" expanded="True" />
           </Node>
-          <Node name="BVE5Tests" expanded="True" selected="True">
-            <Node name="References" expanded="True" />
+          <Node name="BVE5Tests" expanded="True">
+            <Node name="Test.cs" selected="True" />
           </Node>
           <Node name="BVELanguageBinding" expanded="True">
             <Node name="MonoDevelop.BVEBinding" expanded="True" />
-            <Node name="MonoDevelop.BVEBinding.Highlighting" expanded="True" />
-            <Node name="MonoDevelop.BVEBinding.Parser" expanded="True">
-              <Node name="TypeSystem" expanded="True" />
-            </Node>
-            <Node name="MonoDevelop.BVEBinding.Refactoring" expanded="True" />
-            <Node name="MonoDevelop.BVEBinding.Resolver" expanded="True" />
-            <Node name="resources" expanded="True" />
-            <Node name="templates" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -37,15 +32,7 @@
         <State selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True">
-          <Node name="BVE5Tests" expanded="True" selected="True">
-            <Node name="BVE5Language" expanded="True">
-              <Node name="Tests" expanded="True">
-                <Node name="RouteParserTests" expanded="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
+        <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State />
@@ -53,7 +40,13 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/ryouta/ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Tests/Test.cs" line="184" />
+      <Breakpoint file="/home/ryouta/ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Parser/BVE5RouteFileParser.cs" line="172" />
+      <Breakpoint file="/home/ryouta/ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Tests/Test.cs" line="66" />
+      <Breakpoint file="/home/ryouta/ドキュメント/MonoDevelopSolutions/BVELanguageBinding/BVE5Tests/Test.cs" line="65" />
+      <Breakpoint file="/home/ryouta/MonoDevelopSolutions/BVELanguageBinding/MonoDevelop.BVEBinding/BVEMode.cs" line="24" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

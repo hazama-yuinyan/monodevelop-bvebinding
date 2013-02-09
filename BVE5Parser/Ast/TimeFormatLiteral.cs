@@ -48,6 +48,12 @@ namespace BVE5Language.Ast
 			get{return second;}
 		}
 
+		public override NodeType Type {
+			get {
+				return NodeType.TimeLiteral;
+			}
+		}
+
 		public TimeFormatLiteral(int inputHour, int inputMin, int inputSec, TextLocation startLoc, TextLocation endLoc)
 			: base(startLoc, endLoc)
 		{

@@ -35,17 +35,23 @@ namespace BVE5Language.Ast
 	public class MemberReferenceExpression : Expression
 	{
 		private readonly Expression lhs;
-		private readonly Identifer rhs;
+		private readonly Identifier rhs;
 
 		public Expression Target{
 			get{return lhs;}
 		}
 
-		public Identifer Reference{
+		public Identifier Reference{
 			get{return rhs;}
 		}
 
-		public MemberReferenceExpression(Expression target, Identifer reference, TextLocation startLoc, TextLocation endLoc)
+		public override NodeType Type {
+			get {
+				return NodeType.MemRef;
+			}
+		}
+
+		public MemberReferenceExpression(Expression target, Identifier reference, TextLocation startLoc, TextLocation endLoc)
 			: base(startLoc, endLoc)
 		{
 			lhs = target;

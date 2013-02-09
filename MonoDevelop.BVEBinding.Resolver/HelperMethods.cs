@@ -49,25 +49,26 @@ namespace MonoDevelop.BVEBinding.Resolver
 			}
 		}
 
-		public static bool TryResolveAt(this Document doc, DocumentLocation loc, out ResolveResult result, out BVE5UnresolvedFile file)
+		public static bool TryResolveAt(this Document doc, DocumentLocation loc, out ResolveResult result, out AstNode node)
 		{
 			if(doc == null)
 				throw new ArgumentNullException("doc");
 
 			result = null;
-			file = null;
+			node = null;
 			var parsed_doc = doc.ParsedDocument;
 			if(parsed_doc == null)
 				return false;
-			
+
+			var unit = parsed_doc.GetAst<SyntaxTree>();
 			var parsed_file = parsed_doc.ParsedFile as BVE5UnresolvedFile;
 			
-			if(parsed_file == null)
+			if(unit == null || parsed_file == null)
 				return false;
 
 			try{
-				result = ResolveAtLocation.Resolve(new Lazy<ICompilation>(() => doc.Compilation), parsed_file, unit, loc, out file);
-				if(result == null || file is Statement)
+				result = ResolveAtLocation.Resolve(new Lazy<ICompilation>(() => doc.Compilation), parsed_file, unit, loc, out node);
+				if(result == null || node is Statement)
 					return false;
 			}catch(Exception e){
 				Console.WriteLine("Got resolver exception:" + e);

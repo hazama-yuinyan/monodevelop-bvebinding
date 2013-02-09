@@ -26,6 +26,7 @@
 using System;
 using System.Threading;
 
+using ICSharpCode.NRefactory;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 
@@ -37,8 +38,8 @@ namespace MonoDevelop.BVEBinding.Resolver
 {
 	public static class ResolveAtLocation
 	{
-		public static ResolveResult Resolve(Lazy<ICompilation> compilation, BVE5UnresolvedFile unresolvedFile, SyntaxTree syntaxTree, TextLocation location, out AstNode node,
-		                                    CancellationToken cancellationToken = default(CancellationToken))
+		public static ResolveResult Resolve(Lazy<ICompilation> compilation, BVE5UnresolvedFile unresolvedFile, SyntaxTree syntaxTree,
+		                                    TextLocation location, out AstNode node, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			node = syntaxTree.GetNodeAt(location);
 			if(node == null)
@@ -47,7 +48,7 @@ namespace MonoDevelop.BVEBinding.Resolver
 			if(BVE5AstResolver.IsUnresolvableNode(node)){
 				if(node is Identifier){
 					node = node.Parent;
-				}else if (node.NodeType == NodeType.Token){
+				}/*else if(node.NodeType == NodeType.Token){
 					if(node.Parent is IndexerExpression){
 						Console.WriteLine (2);
 						// There's no other place where one could hover to see the indexer's tooltip,
@@ -57,7 +58,7 @@ namespace MonoDevelop.BVEBinding.Resolver
 					}else{
 						return null;
 					}
-				}else{
+				}*/else{
 					// don't resolve arbitrary nodes - we don't want to show tooltips for everything
 					return null;
 				}
@@ -67,26 +68,26 @@ namespace MonoDevelop.BVEBinding.Resolver
 				// For example, hovering with the mouse over an empty line between two methods causes
 				// node==TypeDeclaration, but we don't want to show any tooltip.
 				
-				if(!node.GetChildByRole(Roles.Identifier).IsNull){
+				/*if(!node.GetChildByRole(Roles.Identifier).IsNull){
 					// We'll suppress the tooltip for resolvable nodes if there is an identifier that
 					// could be hovered over instead:
 					return null;
-				}
+				}*/
 			}
 			if(node == null)
 				return null;
 			
-			InvocationExpression parentInvocation = null;
-			if((node is IdentifierExpression || node is MemberReferenceExpression) && node.Role != Roles.Argument){
+			InvocationExpression parent_invocation = null;
+			if(node is MemberReferenceExpression){
 				// we also need to resolve the invocation
-				parentInvocation = node.Parent as InvocationExpression;
+				parent_invocation = node.Parent as InvocationExpression;
 			}
 			
 			// TODO: I think we should provide an overload so that an existing CSharpAstResolver can be reused
 			var resolver = new BVE5AstResolver(compilation.Value, syntaxTree, unresolvedFile);
 			ResolveResult rr = resolver.Resolve(node, cancellationToken);
-			if(rr is MethodGroupResolveResult && parentInvocation != null)
-				return resolver.Resolve(parentInvocation);
+			if(rr is MethodGroupResolveResult && parent_invocation != null)
+				return resolver.Resolve(parent_invocation);
 			else
 				return rr;
 		}

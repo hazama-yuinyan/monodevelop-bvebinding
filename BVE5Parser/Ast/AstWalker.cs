@@ -37,8 +37,8 @@ namespace BVE5Language.Ast
 		public virtual bool Walk(Expression node){return true;}
 		public virtual void PostWalk(Expression node){}
 
-		public virtual bool Walk(Identifer node){return true;}
-		public virtual void PostWalk(Identifer node){}
+		public virtual bool Walk(Identifier node){return true;}
+		public virtual void PostWalk(Identifier node){}
 
 		public virtual bool Walk(IndexerExpression node){return true;}
 		public virtual void PostWalk(IndexerExpression node){}
@@ -64,7 +64,7 @@ namespace BVE5Language.Ast
 
 	public interface IAstWalker<TResult>
 	{
-		TResult Walk(Identifer node);
+		TResult Walk(Identifier node);
 		TResult Walk(IndexerExpression node);
 		TResult Walk(InvocationExpression node);
 		TResult Walk(LiteralExpression node);

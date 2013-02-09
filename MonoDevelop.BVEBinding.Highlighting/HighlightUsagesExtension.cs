@@ -38,7 +38,7 @@ using MonoDevelop.SourceEditor.QuickTasks;
 using MonoDevelop.Core;
 using MonoDevelop.Ide.Gui.Content;
 
-using BVE5Language.TypeSystem;
+using BVE5Language.Ast;
 using MonoDevelop.BVEBinding.Resolver;
 
 using ICSharpCode.NRefactory.TypeSystem;
@@ -131,9 +131,9 @@ namespace MonoDevelop.CSharp.Highlighting
 		{
 			try{
 				ResolveResult result;
-				BVE5UnresolvedFile file;
+				AstNode node;
 
-				if(!Document.TryResolveAt(Document.Editor.Caret.Location, out result, out file)){
+				if(!Document.TryResolveAt(Document.Editor.Caret.Location, out result, out node)){
 					ClearQuickTasks();
 					return false;
 				}

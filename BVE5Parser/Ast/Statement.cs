@@ -15,6 +15,12 @@ namespace BVE5Language.Ast
 			get{return expr;}
 		}
 
+		public override NodeType Type {
+			get {
+				return NodeType.Statement;
+			}
+		}
+
 		public Statement(Expression inputExpr, TextLocation startLoc, TextLocation endLoc)
 			: base(startLoc, endLoc)
 		{

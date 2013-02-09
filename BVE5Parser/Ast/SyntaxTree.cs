@@ -24,8 +24,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Collections.Generic;
 
 using ICSharpCode.NRefactory;
+using ICSharpCode.NRefactory.TypeSystem;
+
+using BVE5Language.TypeSystem;
 
 namespace BVE5Language.Ast
 {
@@ -36,6 +40,11 @@ namespace BVE5Language.Ast
 	{
 		private Statement[] body;
 		private readonly string name;
+		List<Error> errors = new List<Error>();
+		
+		public List<Error> Errors {
+			get { return errors; }
+		}
 
 		public Statement[] Body{
 			get{return body;}
@@ -43,6 +52,12 @@ namespace BVE5Language.Ast
 
 		public string Name{
 			get{return name;}
+		}
+
+		public override NodeType Type {
+			get {
+				return NodeType.Tree;
+			}
 		}
 
 		public SyntaxTree(Statement[] bodyStmts, string treeName, TextLocation startLoc, TextLocation endLoc)
@@ -69,6 +84,19 @@ namespace BVE5Language.Ast
 		public override string GetText()
 		{
 			return "<SyntaxTree>";
+		}
+
+		/// <summary>
+		/// Converts this syntax tree into a parsed file that can be stored in the type system.
+		/// </summary>
+		public BVE5UnresolvedFile ToTypeSystem()
+		{
+			if(string.IsNullOrEmpty(name))
+				throw new InvalidOperationException("Cannot use ToTypeSystem() on a syntax tree without file name.");
+
+			var walker = new TypeSystemConvertWalker(name);
+			walker.Walk(this);
+			return walker.UnresolvedFile;
 		}
 	}
 }

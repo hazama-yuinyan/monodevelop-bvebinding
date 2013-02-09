@@ -32,7 +32,7 @@ namespace BVE5Language.Ast
 	/// <summary>
 	/// Represents an identifer.
 	/// </summary>
-	public class Identifer : Expression
+	public class Identifier : Expression
 	{
 		private readonly string name;
 
@@ -40,7 +40,13 @@ namespace BVE5Language.Ast
 			get{return name;}
 		}
 
-		public Identifer(string identName, TextLocation startLoc, TextLocation endLoc)
+		public override NodeType Type {
+			get {
+				return NodeType.Identifier;
+			}
+		}
+
+		public Identifier(string identName, TextLocation startLoc, TextLocation endLoc)
 			: base(startLoc, endLoc)
 		{
 			name = identName;
@@ -57,7 +63,7 @@ namespace BVE5Language.Ast
 			return walker.Walk(this);
 		}
 
-		public override string GetText ()
+		public override string GetText()
 		{
 			return string.Format("<identifier {0}>", name);
 		}

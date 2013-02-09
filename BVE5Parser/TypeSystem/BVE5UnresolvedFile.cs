@@ -36,6 +36,11 @@ namespace BVE5Language.TypeSystem
 		private readonly string file_name;
 		private List<Error> errors;
 
+		public BVE5UnresolvedFile(string fileName)
+		{
+			file_name = fileName;
+		}
+
 		public BVE5UnresolvedFile(string fileName, List<Error> errorList)
 		{
 			file_name = fileName;
@@ -69,7 +74,7 @@ namespace BVE5Language.TypeSystem
 			}
 		}
 
-		public DateTime? LastWriteTime{get;set;}
+		public DateTime? LastWriteTime{get; set;}
 
 		public IList<IUnresolvedTypeDefinition> TopLevelTypeDefinitions {
 			get {
@@ -92,6 +97,9 @@ namespace BVE5Language.TypeSystem
 		public IList<Error> Errors {
 			get {
 				return errors;
+			}
+			internal set{
+				errors = (List<Error>)value;
 			}
 		}
 		#endregion

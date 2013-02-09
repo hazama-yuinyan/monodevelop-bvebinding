@@ -14,16 +14,25 @@
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
-    <OutputPath>..\..\.local\share\MonoDevelop-3.0\LocalInstall\Addins\Monodevelop.BVEBinding</OutputPath>
+    <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Execute" command="monodevelop" workingdir="${ProjectDir}/bin">
+        	<EnvironmentVariables>
+        		<Variable name="MONODEVELOP_DEV_ADDINS" value="${TargetDir}" />
+      		</EnvironmentVariables>
+        </Command>
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>True</Optimize>
-    <OutputPath>..\..\.local\share\MonoDevelop-3.0\LocalInstall\Addins\Monodevelop.BVEBinding</OutputPath>
+    <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>

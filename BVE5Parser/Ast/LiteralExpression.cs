@@ -39,6 +39,12 @@ namespace BVE5Language.Ast
 			get{return value;}
 		}
 
+		public override NodeType Type {
+			get {
+				return NodeType.Literal;
+			}
+		}
+
 		public LiteralExpression(object parsedValue, TextLocation startLoc, TextLocation endLoc)
 			: base(startLoc, endLoc)
 		{

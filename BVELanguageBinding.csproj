@@ -22,9 +22,9 @@
     <CustomCommands>
       <CustomCommands>
         <Command type="Execute" command="monodevelop" workingdir="${ProjectDir}/bin">
-        	<EnvironmentVariables>
-        		<Variable name="MONODEVELOP_DEV_ADDINS" value="${TargetDir}" />
-      		</EnvironmentVariables>
+          <EnvironmentVariables>
+            <Variable name="MONODEVELOP_DEV_ADDINS" value="${TargetDir}" />
+          </EnvironmentVariables>
         </Command>
       </CustomCommands>
     </CustomCommands>

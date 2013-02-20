@@ -28,8 +28,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-
-using Mono.CSharp;
+using System.Text;
 
 using BVE5Language.Ast;
 
@@ -169,7 +168,7 @@ namespace BVE5Language.Parser
 		/// </param>
 		public BVE5Language.Ast.Statement ParseOneStatement(string src)
 		{
-			return ParseImpl(src/*.Replace(Environment.NewLine, "\n")*/, "<string>", false).Body[0];
+			return ParseImpl(src.Replace(Environment.NewLine, "\n"), "<string>", false).Body[0];
 		}
 		#endregion
 
@@ -211,35 +210,32 @@ namespace BVE5Language.Parser
 			Token token = lexer.Current;
 			BVE5Language.Ast.Expression expr = null;
 
-			if(token.Kind != TokenKind.Comment){	//See if the line 
-				if(token.Kind == TokenKind.IntegerLiteral){
-					expr = ParseLiteral(lexer);
-				}else if(token.Kind == TokenKind.Identifier){
-					AstNode res = ParseIdent(lexer);
-					if(lexer.Current.Literal == "["){
-						res = ParseIndexExpr(lexer, res as BVE5Language.Ast.Expression);
-					}
-
-					token = lexer.Current;
-					if(token.Literal != ".")
-						throw new BVE5ParserException(token.Line, token.Column, "Expected '.' but got " + token.Literal);
-
-					res = ParseMemberRef(lexer, res as BVE5Language.Ast.Expression);
-					expr = ParseInvokeExpr(lexer, res as BVE5Language.Ast.Expression);
-				}else{
-					throw new BVE5ParserException(token.Line, token.Column,
-					                              "A statement must start with an integer literal or an identifier.");
+			if(token.Kind == TokenKind.IntegerLiteral){
+				expr = ParseLiteral(lexer);
+			}else if(token.Kind == TokenKind.Identifier){
+				AstNode res = ParseIdent(lexer);
+				if(lexer.Current.Literal == "["){
+					res = ParseIndexExpr(lexer, res as BVE5Language.Ast.Expression);
 				}
 
 				token = lexer.Current;
-				if(token.Literal != ";")
-					throw new BVE5ParserException(token.Line, token.Column, "Unexpected character: " + token.Literal);
+				if(token.Literal != ".")
+					throw new BVE5ParserException(token.Line, token.Column, "Expected '.' but got " + token.Literal);
 
-				lexer.Advance();
+				res = ParseMemberRef(lexer, res as BVE5Language.Ast.Expression);
+				expr = ParseInvokeExpr(lexer, res as BVE5Language.Ast.Expression);
+			}else{
+				throw new BVE5ParserException(token.Line, token.Column,
+					                            "A statement must start with an integer literal or an identifier.");
 			}
 
 			token = lexer.Current;
-			return AstNode.MakeStatement(expr, expr.StartLocation, token.StartLoc);
+			if(token.Literal != ";")
+				throw new BVE5ParserException(token.Line, token.Column, "Unexpected character: " + token.Literal);
+
+			lexer.Advance();
+
+			return AstNode.MakeStatement(expr, expr.StartLocation, token.EndLoc);   //token should be pointing to a semicolon token
 		}
 
 		// any-character-except-(-)-.-;-[-]
@@ -265,9 +261,8 @@ namespace BVE5Language.Parser
 			if(token.Literal != "]")
 				throw new BVE5ParserException(token.Line, token.Column, "Expected ']' but got " + token.Literal);
 
-			var end_loc = token.EndLoc;
 			lexer.Advance();
-			return AstNode.MakeIndexExpr(target, ident, target.StartLocation, end_loc);
+			return AstNode.MakeIndexExpr(target, ident, target.StartLocation, token.EndLoc);
 		}
 
 		// ident '.' ident
@@ -292,18 +287,7 @@ namespace BVE5Language.Parser
 			var args = new List<BVE5Language.Ast.Expression>();
 
 			while(token.Kind != TokenKind.EOF && token.Literal != ")"){
-				if(token.Kind == TokenKind.Identifier){
-					args.Add(ParseIdent(lexer));
-				}else if(token.Kind == TokenKind.IntegerLiteral){
-					var la = lexer.Peek;
-					if(la.Literal == ":")
-						args.Add(ParseTimeLiteral(lexer));
-					else
-						args.Add(ParseLiteral(lexer));
-				}else{
-					throw new BVE5ParserException(token.Line, token.Column,
-					                              "An argument must be an identifier or a time format literal!");
-				}
+                args.Add(ParseArgument(lexer));
 
 				token = lexer.Current;
 				if(token.Literal == ","){
@@ -315,8 +299,45 @@ namespace BVE5Language.Parser
 			if(token.Kind == TokenKind.EOF)
 				throw new BVE5ParserException(token.Line, token.Column, "Unexpected EOF!");
 
+            lexer.Advance();
 			return AstNode.MakeInvoke(callTarget, args, callTarget.StartLocation, token.EndLoc);
 		}
+
+        private Expression ParseArgument(BVE5RouteFileLexer lexer)
+        {
+            Token token = lexer.Current;
+            if(token.Kind == TokenKind.Identifier){
+                if(lexer.Peek.Literal != "," || lexer.Peek.Literal != ")")
+                    return ParsePathLiteral(lexer);
+                else
+                    return ParseIdent(lexer);
+            }else if(token.Kind == TokenKind.IntegerLiteral){
+                var la = lexer.Peek;
+                if(la.Literal == ":")
+                    return ParseTimeLiteral(lexer);
+                else
+                    return ParseLiteral(lexer);
+            }else{
+                throw new BVE5ParserException(token.Line, token.Column,
+                                              "An argument must be an identifier, a file path, a literal or a time format literal!");
+            }
+        }
+
+        // path-literal
+        private LiteralExpression ParsePathLiteral(BVE5RouteFileLexer lexer)
+        {
+            Token token = lexer.Current;
+            var start_loc = token.StartLoc;
+            Debug.Assert(token.Kind == TokenKind.Identifier, "Really meant a path literal?");
+            var sb = new StringBuilder();
+
+            while(token.Literal != "," && token.Literal != ")"){
+                sb.Append(token.Literal);
+                lexer.Advance();
+                token = lexer.Current;
+            }
+            return AstNode.MakeLiteral(sb.ToString(), start_loc, token.StartLoc);
+        }
 
 		// number
 		private LiteralExpression ParseLiteral(BVE5RouteFileLexer lexer)

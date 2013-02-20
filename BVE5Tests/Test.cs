@@ -62,8 +62,9 @@ namespace BVE5Language.Ast
 		[TestCase]
 		public void Basics()
 		{
+			try{
 			var parser = new BVE5RouteFileParser();
-			var stmt = parser.ParseOneStatement("Sound.Load(sounds.txt);");
+			var stmt = parser.ParseOneStatement(@"Sound.Load(sounds.txt);");
 			var expected1 = new List<TypeDescriber>{
 				TypeDescriber.Create(NodeType.Statement, new List<TypeDescriber>{
 					TypeDescriber.Create(NodeType.Invocation, new List<TypeDescriber>{
@@ -76,6 +77,15 @@ namespace BVE5Language.Ast
 				})
 			};
 			Helpers.TestStructualEqual(expected1.GetEnumerator(), stmt);
+			}
+			catch(TypeLoadException e){
+				var asms = AppDomain.CurrentDomain.GetAssemblies();
+				foreach(var asm in asms)
+					Console.WriteLine(asm.FullName);
+
+				Console.WriteLine(e.Message);
+				Console.WriteLine(e.TypeName);
+			}
 		}
 	}
 }

@@ -1,8 +1,6 @@
 using System;
 using System.IO;
 
-using Mono.Addins;
-
 using MonoDevelop.Core;
 using MonoDevelop.Projects;
 

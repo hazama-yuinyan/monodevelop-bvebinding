@@ -1,4 +1,8 @@
 #BVE Language Binding for MonoDevelop
+##Deprecated!
+NOTE:I decided to stop using this repository and to move the whole project to hazama-yuinyan/sharpdevelop-bvebinding.
+It's because BVE5 itself only runs on Windows and it doesn't make sense to support other OSes.
+Sorry for the incovenience.
 
 This addin adds support for BVE, which is a free-of-charge train simulator running on Windows.
 
